@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/scrip_item_size"
+    android:background="@android:color/white"
+    android:padding="@dimen/scrip_item_padding"
+    >
+
+  <de.hdodenhof.circleimageview.CircleImageView
+      android:id="@+id/portrait_iv"
+      android:layout_width="@dimen/scrip_item_portrait_size"
+      android:layout_height="@dimen/scrip_item_portrait_size"
+      android:layout_gravity="center_vertical"
+      android:layout_marginEnd="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:scaleType="centerCrop"
+      />
+
+  <android.support.percent.PercentFrameLayout
+      android:id="@+id/layout_right_top"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_toEndOf="@id/portrait_iv"
+      android:layout_toRightOf="@id/portrait_iv"
+      app:layout_heightPercent="35%"
+      >
+
+    <TextView
+        android:id="@+id/scrip_title_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_widthPercent="65%"
+        />
+
+    <TextView
+        android:id="@+id/scrip_time_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center_vertical"
+        android:ellipsize="end"
+        android:gravity="end"
+        android:maxLines="1"
+        app:layout_widthPercent="30%"
+        />
+
+  </android.support.percent.PercentFrameLayout>
+
+  <TextView
+      android:id="@+id/scrip_sketch_tv"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_below="@id/layout_right_top"
+      android:layout_toEndOf="@id/portrait_iv"
+      android:layout_toRightOf="@id/portrait_iv"
+      android:ellipsize="end"
+      android:gravity="center_vertical"
+      android:maxLines="1"
+      app:layout_heightPercent="35%"
+      />
+
+</android.support.percent.PercentRelativeLayout>
