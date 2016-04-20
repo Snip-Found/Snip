@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/channel_item_size"
+    android:padding="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools">
+
+  <de.hdodenhof.circleimageview.CircleImageView
+      android:id="@+id/portrait_iv"
+      android:layout_width="@dimen/channel_item_portrait_size"
+      android:layout_height="@dimen/channel_item_portrait_size"
+      android:layout_gravity="center_vertical"
+      android:layout_marginEnd="@dimen/activity_horizontal_margin"
+      android:layout_marginRight="@dimen/activity_horizontal_margin"
+      android:scaleType="centerCrop"
+      tools:src="@drawable/col_96"
+      />
+
+  <TextView
+      android:id="@+id/channel_tv"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center_vertical"
+      tools:text="@string/collection"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:textSize="14sp"
+      android:textStyle="bold"
+      />
+
+</LinearLayout>

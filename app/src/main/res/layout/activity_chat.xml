@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+  <FrameLayout
+      android:id="@+id/titleBar"
+      android:layout_width="match_parent"
+      android:layout_height="?android:actionBarSize"
+      android:background="@color/colorPrimary"
+      >
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Chat"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
+        />
+
+  </FrameLayout>
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/messageList_rv"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_above="@+id/bottomBar"
+      android:layout_below="@id/titleBar"
+      />
+
+  <RelativeLayout
+      android:id="@id/bottomBar"
+      android:layout_width="match_parent"
+      android:layout_height="@dimen/chat_bottom_bar_size"
+      android:layout_alignParentBottom="true"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:padding="@dimen/activity_horizontal_margin"
+      >
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/send_btn"
+        android:layout_toStartOf="@id/send_btn"
+        android:background="@drawable/edittext_bg"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:inputType="text"
+        android:maxLines="1"
+        tools:hint="www.baidu.com"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        />
+
+    <Button
+        android:id="@id/send_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:drawablePadding="0dp"
+        android:layout_alignParentRight="true"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/send_message"
+        android:textColor="@color/colorDisabledText"
+        android:enabled="false"
+        android:background="@drawable/disabled_drawable"
+        />
+
+  </RelativeLayout>
+
+</RelativeLayout>

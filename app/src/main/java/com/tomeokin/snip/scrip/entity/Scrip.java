@@ -18,18 +18,18 @@ package com.tomeokin.snip.scrip.entity;
 import android.graphics.drawable.Drawable;
 
 public class Scrip {
-  private String identity;
+  private int identity;
   private Drawable portrait;
   private String title;
   private String time;
   private String sketch;
   private int noticeCount;
 
-  public String getIdentity() {
+  public int getIdentity() {
     return identity;
   }
 
-  public void setIdentity(String identity) {
+  public void setIdentity(int identity) {
     this.identity = identity;
   }
 

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    >
+
+  <de.hdodenhof.circleimageview.CircleImageView
+      android:id="@+id/portrait_iv"
+      android:layout_width="@dimen/message_item_portrait_size"
+      android:layout_height="@dimen/message_item_portrait_size"
+      android:layout_gravity="center_vertical"
+      android:scaleType="centerCrop"
+      tools:src="@drawable/col_96"
+      />
+
+  <TextView
+      android:id="@+id/portrait_tv"
+      android:layout_toRightOf="@id/portrait_iv"
+      android:layout_toEndOf="@id/portrait_iv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ellipsize="end"
+      android:maxLines="1"
+      android:textSize="14sp"
+      android:visibility="gone"
+      tools:text="收藏"
+      />
+
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_toRightOf="@id/portrait_iv"
+      android:layout_toEndOf="@id/portrait_iv"
+      android:layout_below="@id/portrait_tv"
+      >
+
+    <me.himanshusoni.chatmessageview.ChatMessageView
+        android:id="@+id/chat_message_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cmv_backgroundColor="#88BABABA"
+        app:cmv_backgroundColorPressed="#FFBABABA"
+        app:cmv_cornerRadius="3dp"
+        app:cmv_arrowGravity="start"
+        app:cmv_arrowPosition="left"
+        >
+
+      <ImageView
+          android:id="@+id/message_image"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          />
+
+      <TextView
+          android:id="@+id/message_text"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/message_image"
+          tools:text="baidu"
+          />
+
+    </me.himanshusoni.chatmessageview.ChatMessageView>
+
+    <ImageView
+        android:id="@+id/tag_iv"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_alignBottom="@id/chat_message_container"
+        android:layout_toEndOf="@id/chat_message_container"
+        android:layout_toRightOf="@id/chat_message_container"
+        android:src="@drawable/pin"
+        android:visibility="gone"
+        tools:visibility="visible"
+        />
+
+  </RelativeLayout>
+
+</RelativeLayout>

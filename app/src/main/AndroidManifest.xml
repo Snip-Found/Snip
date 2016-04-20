@@ -18,7 +18,33 @@
     <activity
         android:name=".scrip.activity.ScripListActivity"
         android:exported="true"
-        android:label="@string/scrip"/>
+        android:label="@string/scrip">
+    </activity>
+    <activity
+        android:name=".chat.activity.ChatActivity"
+        android:exported="true"
+        android:label="@string/chat"
+        android:theme="@style/ChatTheme"/>
+    <activity
+        android:name=".share.activity.ShareReceiveActivity"
+        android:exported="true"
+        android:label="@string/send_to">
+      <intent-filter>
+        <action android:name="android.intent.action.SEND"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:mimeType="image/*"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.SEND"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:mimeType="text/plain"/>
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.SEND_MULTIPLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:mimeType="image/*"/>
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

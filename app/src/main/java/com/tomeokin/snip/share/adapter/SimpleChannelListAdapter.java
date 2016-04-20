@@ -13,44 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.tomeokin.snip.scrip.adapter;
+package com.tomeokin.snip.share.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.tomeokin.snip.R;
-import com.tomeokin.snip.chat.activity.ChatActivity;
 import com.tomeokin.snip.scrip.entity.Scrip;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.List;
 
-public class ScripListAdapter extends RecyclerView.Adapter<ScripListAdapter.ViewHolder>
+public class SimpleChannelListAdapter
+    extends RecyclerView.Adapter<SimpleChannelListAdapter.ViewHolder>
     implements View.OnClickListener {
-  private static final String TAG = "ScripListAdapter";
+  private static final String TAG = "SimpleChannelListAdapter";
 
   class ViewHolder extends RecyclerView.ViewHolder {
     CircleImageView portrait;
-    TextView title;
-    TextView time;
-    TextView sketch;
+    TextView channelTitle;
 
     public ViewHolder(View itemView) {
       super(itemView);
       portrait = (CircleImageView) itemView.findViewById(R.id.portrait_iv);
-      title = (TextView) itemView.findViewById(R.id.scrip_title_tv);
-      time = (TextView) itemView.findViewById(R.id.scrip_time_tv);
-      sketch = (TextView) itemView.findViewById(R.id.scrip_sketch_tv);
+      channelTitle = (TextView) itemView.findViewById(R.id.channel_tv);
     }
   }
 
   private Context context;
   private List<Scrip> scripList;
 
-  public ScripListAdapter(Context context, List<Scrip> scripList) {
+  public SimpleChannelListAdapter(Context context, List<Scrip> scripList) {
     this.context = context;
     this.scripList = scripList;
   }
@@ -58,7 +54,7 @@ public class ScripListAdapter extends RecyclerView.Adapter<ScripListAdapter.View
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-    View view = inflater.inflate(R.layout.list_item_scrip, parent, false);
+    View view = inflater.inflate(R.layout.list_item_simple_channel, parent, false);
     final ViewHolder viewHolder = new ViewHolder(view);
     viewHolder.itemView.setOnClickListener(this);
     return viewHolder;
@@ -69,9 +65,7 @@ public class ScripListAdapter extends RecyclerView.Adapter<ScripListAdapter.View
     final Scrip scrip = scripList.get(position);
     holder.itemView.setTag(scrip.getIdentity());
     holder.portrait.setImageDrawable(scrip.getPortrait());
-    holder.title.setText(scrip.getTitle());
-    holder.time.setText(scrip.getTime());
-    holder.sketch.setText(scrip.getSketch());
+    holder.channelTitle.setText(scrip.getTitle());
   }
 
   @Override
@@ -82,9 +76,8 @@ public class ScripListAdapter extends RecyclerView.Adapter<ScripListAdapter.View
   @Override
   public void onClick(View v) {
     final int identity = (int) v.getTag();
-    Intent intent = new Intent(context, ChatActivity.class);
-    intent.putExtra(ChatActivity.EXTRA_MESSAGE_LIST_ID, identity);
-    context.startActivity(intent);
+    // TODO
+    Log.i(TAG, "indetity: " + identity);
   }
 
   public List<Scrip> getScripList() {

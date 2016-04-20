@@ -6,4 +6,12 @@
   <dimen name="scrip_item_padding">8dp</dimen>
   <dimen name="scrip_item_size">64dp</dimen>
   <dimen name="scrip_item_portrait_size">48dp</dimen>
+
+  <dimen name="message_item_portrait_size">36dp</dimen>
+  <dimen name="chat_bottom_bar_size">68dp</dimen>
+
+  <dimen name="channel_item_padding">8dp</dimen>
+  <dimen name="channel_item_size">64dp</dimen>
+  <dimen name="channel_item_portrait_size">48dp</dimen>
+  <dimen name="share_edit_image_size">128dp</dimen>
 </resources>

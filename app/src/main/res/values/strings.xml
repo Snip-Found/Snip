@@ -1,6 +1,11 @@
 <resources>
   <string name="app_name">Snip</string>
 
-  <string name="scrip">message</string>
-  <string name="collection">my collection</string>
+  <string name="scrip">Message</string>
+  <string name="collection">My Collection</string>
+  <string name="chat">Chat</string>
+  <string name="send_message">Send</string>
+  <string name="send_to">Send To</string>
+  <string name="search">search</string>
+  <string name="talk_recently">talk recently</string>
 </resources>

@@ -25,7 +25,7 @@ import java.util.List;
 public class ScripManager {
   private static Context context;
   public static SparseArray<Class> scripMapper;
-  public static final String COLLECTION = "collection";
+  public static final int COLLECTION = Integer.MAX_VALUE - 1;
   private static List<Scrip> scripList = null;
 
   private ScripManager() {

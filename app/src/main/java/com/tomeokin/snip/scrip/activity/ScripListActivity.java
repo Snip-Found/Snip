@@ -22,9 +22,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import com.tomeokin.snip.R;
 import com.tomeokin.snip.scrip.ScripManager;
-import com.tomeokin.snip.scrip.entity.Scrip;
 import com.tomeokin.snip.scrip.adapter.ScripListAdapter;
 import com.tomeokin.snip.scrip.decorator.DividerItemDecoration;
+import com.tomeokin.snip.scrip.entity.Scrip;
 import java.util.List;
 
 public class ScripListActivity extends AppCompatActivity {
@@ -49,7 +49,7 @@ public class ScripListActivity extends AppCompatActivity {
   private void updateAdapter() {
     if (mScripAdapter == null) {
       mScripList = mScripManager.getScripList();
-      mScripAdapter = new ScripListAdapter(mScripList);
+      mScripAdapter = new ScripListAdapter(this, mScripList);
       mScripListRv.setAdapter(mScripAdapter);
     } else {
       mScripAdapter.setScripList(mScripList);
