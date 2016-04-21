@@ -5,7 +5,9 @@
   <string name="collection">My Collection</string>
   <string name="chat">Chat</string>
   <string name="send_message">Send</string>
+  <string name="send_to_app">Send To Snip</string>
   <string name="send_to">Send To</string>
   <string name="search">search</string>
   <string name="talk_recently">talk recently</string>
+  <string name="send_to_arg">Send To %s</string>
 </resources>

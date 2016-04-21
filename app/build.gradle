@@ -31,4 +31,5 @@ dependencies {
   compile 'de.hdodenhof:circleimageview:2.0.0'
   compile 'com.android.support:percent:23.3.0'
   compile 'me.himanshusoni.chatmessageview:chat-message-view:1.0.3'
+  compile 'com.squareup.retrofit2:retrofit:2.0.2'
 }

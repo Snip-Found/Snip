@@ -28,7 +28,7 @@
     <activity
         android:name=".share.activity.ShareReceiveActivity"
         android:exported="true"
-        android:label="@string/send_to">
+        android:label="@string/send_to_app">
       <intent-filter>
         <action android:name="android.intent.action.SEND"/>
         <category android:name="android.intent.category.DEFAULT"/>

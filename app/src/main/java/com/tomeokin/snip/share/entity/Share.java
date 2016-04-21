@@ -15,6 +15,81 @@
  */
 package com.tomeokin.snip.share.entity;
 
-public class Share {
-  
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+import java.util.List;
+
+public class Share implements Parcelable {
+  private String title;
+  private String webUrl;
+  private Uri fileUrl;
+  private List<String> tagList;
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getWebUrl() {
+    return webUrl;
+  }
+
+  public void setWebUrl(String webUrl) {
+    this.webUrl = webUrl;
+  }
+
+  public Uri getFileUrl() {
+    return fileUrl;
+  }
+
+  public void setFileUrl(Uri fileUrl) {
+    this.fileUrl = fileUrl;
+  }
+
+  public List<String> getTagList() {
+    return tagList;
+  }
+
+  public void setTagList(List<String> tagList) {
+    this.tagList = tagList;
+  }
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeString(this.title);
+    dest.writeString(this.webUrl);
+    dest.writeParcelable(this.fileUrl, flags);
+    dest.writeStringList(this.tagList);
+  }
+
+  public Share() {
+  }
+
+  protected Share(Parcel in) {
+    this.title = in.readString();
+    this.webUrl = in.readString();
+    this.fileUrl = in.readParcelable(Uri.class.getClassLoader());
+    this.tagList = in.createStringArrayList();
+  }
+
+  public static final Creator<Share> CREATOR = new Creator<Share>() {
+    @Override
+    public Share createFromParcel(Parcel source) {
+      return new Share(source);
+    }
+
+    @Override
+    public Share[] newArray(int size) {
+      return new Share[size];
+    }
+  };
 }

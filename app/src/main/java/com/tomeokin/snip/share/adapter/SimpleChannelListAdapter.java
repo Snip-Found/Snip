@@ -17,7 +17,6 @@ package com.tomeokin.snip.share.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +44,7 @@ public class SimpleChannelListAdapter
 
   private Context context;
   private List<Scrip> scripList;
+  private OnSelectedListener listener;
 
   public SimpleChannelListAdapter(Context context, List<Scrip> scripList) {
     this.context = context;
@@ -63,7 +63,7 @@ public class SimpleChannelListAdapter
   @Override
   public void onBindViewHolder(ViewHolder holder, int position) {
     final Scrip scrip = scripList.get(position);
-    holder.itemView.setTag(scrip.getIdentity());
+    holder.itemView.setTag(position);
     holder.portrait.setImageDrawable(scrip.getPortrait());
     holder.channelTitle.setText(scrip.getTitle());
   }
@@ -75,9 +75,10 @@ public class SimpleChannelListAdapter
 
   @Override
   public void onClick(View v) {
-    final int identity = (int) v.getTag();
-    // TODO
-    Log.i(TAG, "indetity: " + identity);
+    final int position = (int) v.getTag();
+    if (listener != null) {
+      listener.onItemSelected(v, scripList.get(position));
+    }
   }
 
   public List<Scrip> getScripList() {
@@ -86,5 +87,17 @@ public class SimpleChannelListAdapter
 
   public void setScripList(List<Scrip> scripList) {
     this.scripList = scripList;
+  }
+
+  public interface OnSelectedListener {
+    void onItemSelected(View view, Scrip scrip);
+  }
+
+  public OnSelectedListener getListener() {
+    return listener;
+  }
+
+  public void setListener(OnSelectedListener listener) {
+    this.listener = listener;
   }
 }

@@ -15,85 +15,15 @@
  */
 package com.tomeokin.snip.share.activity;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import com.tomeokin.snip.R;
-import com.tomeokin.snip.scrip.ScripManager;
-import com.tomeokin.snip.scrip.decorator.DividerItemDecoration;
-import com.tomeokin.snip.scrip.entity.Scrip;
-import com.tomeokin.snip.share.adapter.SimpleChannelListAdapter;
-import java.util.ArrayList;
-import java.util.List;
+import android.support.v4.app.Fragment;
+import com.tomeokin.snip.base.SingleFragmentActivity;
+import com.tomeokin.snip.share.fragment.ShareReceiveFragment;
 
-public class ShareReceiveActivity extends AppCompatActivity {
-  RecyclerView mChannelListRv;
-  SimpleChannelListAdapter mSimpleChannelAdapter;
-  private List<Scrip> mScripList = null;
-  private ScripManager mScripManager;
-
+public class ShareReceiveActivity extends SingleFragmentActivity {
   @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_share_receive);
-
-    mScripManager = ScripManager.getInstance(this);
-    mChannelListRv = (RecyclerView) findViewById(R.id.channelList_rv);
-    mChannelListRv.setLayoutManager(new LinearLayoutManager(this));
-    mChannelListRv.addItemDecoration(
-        new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-    updateAdapter();
-
-    Intent intent = getIntent();
-    String action = intent.getAction();
-    String type = intent.getType();
-
-    if (Intent.ACTION_SEND.equals(action) && type != null) {
-      if ("text/plain".equals(type)) {
-        handleSendText(intent); // Handle text being sent
-      } else if (type.startsWith("image/")) {
-        handleSendImage(intent); // Handle single image being sent
-      }
-    } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
-      if (type.startsWith("image/")) {
-        handleSendMultipleImages(intent); // Handle multiple images being sent
-      }
-    }
+  protected Fragment createFragment() {
+    return new ShareReceiveFragment();
   }
 
-  private void updateAdapter() {
-    if (mSimpleChannelAdapter == null) {
-      mScripList = mScripManager.getScripList();
-      mSimpleChannelAdapter = new SimpleChannelListAdapter(this, mScripList);
-      mChannelListRv.setAdapter(mSimpleChannelAdapter);
-    } else {
-      mSimpleChannelAdapter.setScripList(mScripList);
-      mSimpleChannelAdapter.notifyDataSetChanged();
-    }
-  }
-
-  void handleSendText(Intent intent) {
-    String sharedTitle = intent.getStringExtra(Intent.EXTRA_TITLE);
-    String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-
-    
-  }
-
-  void handleSendImage(Intent intent) {
-    Uri imageUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
-    if (imageUri != null) {
-      // Update UI to reflect image being shared
-    }
-  }
-
-  void handleSendMultipleImages(Intent intent) {
-    ArrayList<Uri> imageUris = intent.getParcelableArrayListExtra(Intent.EXTRA_STREAM);
-    if (imageUris != null) {
-      // Update UI to reflect multiple images being shared
-    }
-  }
+  // FIXME: 2016/4/21 Change activity title to R.string.send_to and keep activity label to R.string.send_to_app
 }

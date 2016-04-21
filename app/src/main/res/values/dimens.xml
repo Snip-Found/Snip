@@ -14,4 +14,5 @@
   <dimen name="channel_item_size">64dp</dimen>
   <dimen name="channel_item_portrait_size">48dp</dimen>
   <dimen name="share_edit_image_size">128dp</dimen>
+  <dimen name="dialog_horizontal_margin">24dp</dimen>
 </resources>
