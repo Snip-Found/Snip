@@ -21,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.tomeokin.alpha.R;
+import com.tomeokin.alpha.uri.UriUtils;
 
 public class ShareSendActivity extends AppCompatActivity {
   @Override
@@ -45,5 +46,11 @@ public class ShareSendActivity extends AppCompatActivity {
     startActivity(Intent.createChooser(send, getResources().getString(R.string.share_to)));
   }
 
-
+  public void onBtnImgUriSelected(View view) {
+    Intent send = new Intent();
+    send.setAction(Intent.ACTION_SEND);
+    send.putExtra(Intent.EXTRA_STREAM, UriUtils.resourceIdToUri(this, R.drawable.cat_fly_core));
+    send.setType("image/*");
+    startActivity(Intent.createChooser(send, getResources().getString(R.string.share_to)));
+  }
 }

@@ -24,9 +24,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tomeokin.snip.R;
 import com.tomeokin.snip.share.entity.Share;
 
@@ -81,6 +84,14 @@ public class MessageRemarksFragment extends DialogFragment
     if (!TextUtils.isEmpty(share.getWebUrl())) {
       shareUrlTV.setText(share.getWebUrl());
       shareUrlTV.setVisibility(View.VISIBLE);
+    }
+    if (share.getImgUrl() != null && !TextUtils.isEmpty(share.getImgUrl().toString())) {
+      Log.i("take", share.getImgUrl().toString());
+      shareImageView.setVisibility(View.VISIBLE);
+      Glide.with(this)
+          .load(share.getImgUrl())
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .into(shareImageView);
     }
   }
 

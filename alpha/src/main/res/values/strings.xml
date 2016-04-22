@@ -3,5 +3,5 @@
   <string name="share_to">Share To</string>
   <string name="share_text">Share Text</string>
   <string name="share_web_url">Share Web Url</string>
-  <string name="share_file_uri">Share Local File</string>
+  <string name="share_img_uri">Share Local File</string>
 </resources>

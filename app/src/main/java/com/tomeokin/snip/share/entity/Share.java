@@ -23,7 +23,7 @@ import java.util.List;
 public class Share implements Parcelable {
   private String title;
   private String webUrl;
-  private Uri fileUrl;
+  private Uri imgUrl;
   private List<String> tagList;
 
   public String getTitle() {
@@ -42,12 +42,12 @@ public class Share implements Parcelable {
     this.webUrl = webUrl;
   }
 
-  public Uri getFileUrl() {
-    return fileUrl;
+  public Uri getImgUrl() {
+    return imgUrl;
   }
 
-  public void setFileUrl(Uri fileUrl) {
-    this.fileUrl = fileUrl;
+  public void setImageUrl(Uri fileUrl) {
+    this.imgUrl = fileUrl;
   }
 
   public List<String> getTagList() {
@@ -67,7 +67,7 @@ public class Share implements Parcelable {
   public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(this.title);
     dest.writeString(this.webUrl);
-    dest.writeParcelable(this.fileUrl, flags);
+    dest.writeParcelable(this.imgUrl, flags);
     dest.writeStringList(this.tagList);
   }
 
@@ -77,7 +77,7 @@ public class Share implements Parcelable {
   protected Share(Parcel in) {
     this.title = in.readString();
     this.webUrl = in.readString();
-    this.fileUrl = in.readParcelable(Uri.class.getClassLoader());
+    this.imgUrl = in.readParcelable(Uri.class.getClassLoader());
     this.tagList = in.createStringArrayList();
   }
 

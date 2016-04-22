@@ -101,7 +101,7 @@ public class ShareReceiveFragment extends Fragment implements SimpleChannelListA
         mShare.setTitle(intent.getStringExtra(Intent.EXTRA_TITLE));
         mShare.setWebUrl(intent.getStringExtra(Intent.EXTRA_TEXT));
       } else if (type.startsWith("image/")) {
-        mShare.setFileUrl((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
+        mShare.setImageUrl((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
       }
 
     } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
