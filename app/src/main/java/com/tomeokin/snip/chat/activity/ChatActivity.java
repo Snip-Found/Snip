@@ -67,7 +67,7 @@ public class ChatActivity extends AppCompatActivity {
 
     mTitle = (TextView) findViewById(R.id.title_tv);
     mMessageListRv = (RecyclerView) findViewById(R.id.messageList_rv);
-    LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+    LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     //mLayoutManager.setReverseLayout(true);
     //mLayoutManager.setStackFromEnd(true);
     mMessageListRv.setLayoutManager(mLayoutManager);
@@ -122,6 +122,8 @@ public class ChatActivity extends AppCompatActivity {
       mMessageAdapter.setMessageList(mMessageList);
       mMessageAdapter.notifyDataSetChanged();
     }
-    mMessageListRv.scrollToPosition(mMessageAdapter.getItemCount());
+    LinearLayoutManager manager = (LinearLayoutManager) mMessageListRv.getLayoutManager();
+    manager.scrollToPositionWithOffset(mMessageAdapter.getItemCount() - 1, 0);
+    //mMessageListRv.scrollToPosition(0);
   }
 }
