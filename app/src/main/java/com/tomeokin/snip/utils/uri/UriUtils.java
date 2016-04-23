@@ -22,7 +22,11 @@ public class UriUtils {
   public static final String ANDROID_RESOURCE = "android.resource://";
   public static final String FOREWARD_SLASH = "/";
 
-  private static Uri resourceIdToUri(Context context, int resourceId) {
+  public static Uri resourceIdToUri(Context context, int resourceId) {
     return Uri.parse(ANDROID_RESOURCE + context.getPackageName() + FOREWARD_SLASH + resourceId);
+  }
+
+  public static boolean isEmpty(Uri uri) {
+    return uri == null || Uri.EMPTY.equals(uri);
   }
 }

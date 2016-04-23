@@ -15,16 +15,17 @@
  */
 package com.tomeokin.snip.chat.entity;
 
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import java.util.List;
 
 public class Message {
   private String id;
-  private Drawable portraitImg;
+  private Uri portraitImg;
   private String portraitName;
-  private Drawable messageImg;
+  private Uri messageImg;
   private String messageText;
   private String time;
-  private boolean hasTag;
+  private List<String> tagList;
 
   public String getId() {
     return id;
@@ -34,11 +35,11 @@ public class Message {
     this.id = id;
   }
 
-  public Drawable getPortraitImg() {
+  public Uri getPortraitImg() {
     return portraitImg;
   }
 
-  public void setPortraitImg(Drawable portraitImg) {
+  public void setPortraitImg(Uri portraitImg) {
     this.portraitImg = portraitImg;
   }
 
@@ -50,11 +51,11 @@ public class Message {
     this.portraitName = portraitName;
   }
 
-  public Drawable getMessageImg() {
+  public Uri getMessageImg() {
     return messageImg;
   }
 
-  public void setMessageImg(Drawable messageImg) {
+  public void setMessageImg(Uri messageImg) {
     this.messageImg = messageImg;
   }
 
@@ -74,11 +75,11 @@ public class Message {
     this.time = time;
   }
 
-  public boolean isHasTag() {
-    return hasTag;
+  public List<String> getTagList() {
+    return tagList;
   }
 
-  public void setHasTag(boolean hasTag) {
-    this.hasTag = hasTag;
+  public void setTagList(List<String> tagList) {
+    this.tagList = tagList;
   }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -19,10 +18,10 @@
 
   <TextView
       android:id="@+id/portrait_tv"
-      android:layout_toRightOf="@id/portrait_iv"
-      android:layout_toEndOf="@id/portrait_iv"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_toEndOf="@id/portrait_iv"
+      android:layout_toRightOf="@id/portrait_iv"
       android:ellipsize="end"
       android:maxLines="1"
       android:textSize="14sp"
@@ -33,26 +32,37 @@
   <RelativeLayout
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_toRightOf="@id/portrait_iv"
-      android:layout_toEndOf="@id/portrait_iv"
       android:layout_below="@id/portrait_tv"
+      android:layout_toEndOf="@id/portrait_iv"
+      android:layout_toRightOf="@id/portrait_iv"
       >
 
-    <me.himanshusoni.chatmessageview.ChatMessageView
+    <!--<me.himanshusoni.chatmessageview.ChatMessageView-->
+    <!--android:id="@+id/chat_message_container"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:cmv_backgroundColor="#88BABABA"-->
+    <!--app:cmv_backgroundColorPressed="#FFBABABA"-->
+    <!--app:cmv_cornerRadius="3dp"-->
+    <!--app:cmv_arrowGravity="start"-->
+    <!--app:cmv_arrowPosition="left"-->
+    <!--&gt;-->
+
+    <!---->
+
+    <!--</me.himanshusoni.chatmessageview.ChatMessageView>-->
+
+    <RelativeLayout
         android:id="@+id/chat_message_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cmv_backgroundColor="#88BABABA"
-        app:cmv_backgroundColorPressed="#FFBABABA"
-        app:cmv_cornerRadius="3dp"
-        app:cmv_arrowGravity="start"
-        app:cmv_arrowPosition="left"
         >
 
       <ImageView
           android:id="@+id/message_image"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:adjustViewBounds="true"
           android:visibility="gone"
           />
 
@@ -61,10 +71,13 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@id/message_image"
+          android:visibility="gone"
           tools:text="baidu"
+          tools:visibility="visible"
           />
 
-    </me.himanshusoni.chatmessageview.ChatMessageView>
+    </RelativeLayout>
+
 
     <ImageView
         android:id="@+id/tag_iv"

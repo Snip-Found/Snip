@@ -20,7 +20,9 @@ import android.util.SparseArray;
 import com.tomeokin.snip.R;
 import com.tomeokin.snip.chat.entity.Message;
 import com.tomeokin.snip.scrip.ScripManager;
+import com.tomeokin.snip.utils.uri.UriUtils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MessageManager {
@@ -34,8 +36,8 @@ public class MessageManager {
 
     Message message = new Message();
     message.setMessageText("text");
-    message.setHasTag(true);
-    message.setPortraitImg(context.getResources().getDrawable(R.drawable.col_96));
+    message.setTagList(Arrays.asList("tag1", "tag2"));
+    message.setPortraitImg(UriUtils.resourceIdToUri(context, R.drawable.col_96));
     message.setPortraitName("收藏");
 
     messageList.add(message);
@@ -48,6 +50,16 @@ public class MessageManager {
 
   public void setMessageList(int id, List<Message> messageList) {
     messageCache.put(id, messageList);
+  }
+
+  public void putMessageInto(int id, Message message) {
+    List<Message> messageList = messageCache.get(id);
+    if (messageList == null) {
+      messageList = new ArrayList<>();
+    }
+    messageList.add(message);
+    messageCache.put(id, messageList);
+
   }
 
   public static MessageManager getInstance(Context context) {

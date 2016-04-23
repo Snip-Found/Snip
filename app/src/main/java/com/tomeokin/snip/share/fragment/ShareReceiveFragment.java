@@ -28,15 +28,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.tomeokin.snip.R;
+import com.tomeokin.snip.chat.MessageManager;
+import com.tomeokin.snip.chat.activity.ChatActivity;
+import com.tomeokin.snip.chat.entity.Message;
 import com.tomeokin.snip.scrip.ScripManager;
 import com.tomeokin.snip.scrip.decorator.DividerItemDecoration;
 import com.tomeokin.snip.scrip.entity.Scrip;
 import com.tomeokin.snip.share.adapter.SimpleChannelListAdapter;
 import com.tomeokin.snip.share.entity.Share;
+import com.tomeokin.snip.utils.uri.UriUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShareReceiveFragment extends Fragment implements SimpleChannelListAdapter.OnSelectedListener {
+public class ShareReceiveFragment extends Fragment
+    implements SimpleChannelListAdapter.OnSelectedListener {
   private static final String DIALOG_SHARE = "share";
   private static final int REQUEST_SHARE = 0;
 
@@ -44,7 +49,8 @@ public class ShareReceiveFragment extends Fragment implements SimpleChannelListA
   SimpleChannelListAdapter mSimpleChannelAdapter;
   private List<Scrip> mScripList = null;
   private ScripManager mScripManager;
-  private Share mShare;
+  private MessageManager mMessageManager;
+  private Scrip mScrip;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,13 +64,14 @@ public class ShareReceiveFragment extends Fragment implements SimpleChannelListA
     final View view = inflater.inflate(R.layout.activity_share_receive, container, false);
 
     mScripManager = ScripManager.getInstance(getContext());
+    mMessageManager = MessageManager.getInstance(getContext());
+
     mChannelListRv = (RecyclerView) view.findViewById(R.id.channelList_rv);
     mChannelListRv.setLayoutManager(new LinearLayoutManager(getContext()));
     mChannelListRv.addItemDecoration(
         new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
     updateAdapter();
 
-    dealIntent();
     return view;
   }
 
@@ -81,34 +88,43 @@ public class ShareReceiveFragment extends Fragment implements SimpleChannelListA
   }
 
   @Override
+  public void onResume() {
+    super.onResume();
+  }
+
+  @Override
   public void onItemSelected(View view, Scrip scrip) {
     final String name = getResources().getString(R.string.send_to_arg, scrip.getTitle());
 
+    mScrip = scrip;
+    Share share = dealIntent();
+
     FragmentManager fm = getActivity().getSupportFragmentManager();
-    MessageRemarksFragment dialog = MessageRemarksFragment.newInstance(name, mShare);
+    MessageRemarksFragment dialog = MessageRemarksFragment.newInstance(name, share);
     dialog.setTargetFragment(ShareReceiveFragment.this, REQUEST_SHARE);
     dialog.show(fm, DIALOG_SHARE);
   }
 
-  private void dealIntent() {
+  private Share dealIntent() {
     Intent intent = getActivity().getIntent();
     String action = intent.getAction();
     String type = intent.getType();
 
-    mShare = new Share();
+    Share share = new Share();
     if (Intent.ACTION_SEND.equals(action) && type != null) {
       if ("text/plain".equals(type)) {
-        mShare.setTitle(intent.getStringExtra(Intent.EXTRA_TITLE));
-        mShare.setWebUrl(intent.getStringExtra(Intent.EXTRA_TEXT));
+        share.setTitle(intent.getStringExtra(Intent.EXTRA_TITLE));
+        share.setWebUrl(intent.getStringExtra(Intent.EXTRA_TEXT));
       } else if (type.startsWith("image/")) {
-        mShare.setImageUrl((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
+        share.setImageUrl((Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM));
       }
-
     } else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null) {
       if (type.startsWith("image/")) {
         //handleSendMultipleImages(intent); // Handle multiple images being sent
       }
     }
+
+    return share;
   }
 
   @Override
@@ -118,9 +134,21 @@ public class ShareReceiveFragment extends Fragment implements SimpleChannelListA
     }
 
     if (requestCode == REQUEST_SHARE) {
-      mShare = data.getParcelableExtra(MessageRemarksFragment.EXTRA_SHARE);
+      Share share = data.getParcelableExtra(MessageRemarksFragment.EXTRA_SHARE);
+      final Message message = new Message();
+      message.setMessageImg(share.getImgUrl());
+      message.setTagList(share.getTagList());
+      message.setMessageText(share.getTitle()); // FIXME: 2016/4/23
+      message.setPortraitName("收藏"); // TODO
+      message.setPortraitImg(UriUtils.resourceIdToUri(getContext(), R.drawable.col_96)); // TODO
+      mMessageManager.putMessageInto(mScrip.getIdentity(), message);
+
+      //Intent intent = new Intent(getContext(), ChatActivity.class);
+      //intent.putExtra(ChatActivity.EXTRA_MESSAGE_LIST_ID, mScrip.getIdentity());
+      //getContext().startActivity(intent);
+      ChatActivity.start(getContext(), mScrip.getIdentity());
+      getActivity().finish();
     }
-    super.onActivityResult(requestCode, resultCode, data);
   }
 
   void handleSendText(Intent intent) {
@@ -143,5 +171,11 @@ public class ShareReceiveFragment extends Fragment implements SimpleChannelListA
     if (imageUris != null) {
       // Update UI to reflect multiple images being shared
     }
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    getActivity().finish();
   }
 }

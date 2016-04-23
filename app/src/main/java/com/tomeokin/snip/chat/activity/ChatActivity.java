@@ -15,6 +15,8 @@
  */
 package com.tomeokin.snip.chat.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -30,6 +33,8 @@ import com.tomeokin.snip.R;
 import com.tomeokin.snip.chat.MessageManager;
 import com.tomeokin.snip.chat.adapter.MessageListAdapter;
 import com.tomeokin.snip.chat.entity.Message;
+import com.tomeokin.snip.utils.uri.UriUtils;
+import java.util.Date;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -46,6 +51,12 @@ public class ChatActivity extends AppCompatActivity {
   private MessageManager mMessageManager;
   private int mId;
 
+  public static void start(Context context, int identity) {
+    Intent intent = new Intent(context, ChatActivity.class);
+    intent.putExtra(ChatActivity.EXTRA_MESSAGE_LIST_ID, identity);
+    context.startActivity(intent);
+  }
+
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -56,7 +67,11 @@ public class ChatActivity extends AppCompatActivity {
 
     mTitle = (TextView) findViewById(R.id.title_tv);
     mMessageListRv = (RecyclerView) findViewById(R.id.messageList_rv);
-    mMessageListRv.setLayoutManager(new LinearLayoutManager(this));
+    LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+    //mLayoutManager.setReverseLayout(true);
+    //mLayoutManager.setStackFromEnd(true);
+    mMessageListRv.setLayoutManager(mLayoutManager);
+    mMessageListRv.setHasFixedSize(true);
     updateAdapter();
 
     mEditText = (EditText) findViewById(R.id.editText);
@@ -80,16 +95,33 @@ public class ChatActivity extends AppCompatActivity {
       }
     });
     mSendButton = (Button) findViewById(R.id.send_btn);
+    mSendButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (!TextUtils.isEmpty(mEditText.getText())) {
+          Message message = new Message();
+          message.setPortraitImg(UriUtils.resourceIdToUri(ChatActivity.this, R.drawable.col_96));
+          message.setPortraitName("收藏");
+          message.setMessageText(mEditText.getText().toString());
+          message.setTime(new Date().toString());
+          mMessageManager.putMessageInto(mId, message);
+          mEditText.setText(null);
+          updateAdapter();
+        }
+      }
+    });
   }
 
   private void updateAdapter() {
     if (mMessageAdapter == null) {
       mMessageList = mMessageManager.getMessageList(mId);
-      mMessageAdapter = new MessageListAdapter(mMessageList);
+      mMessageAdapter = new MessageListAdapter(this, mMessageList);
       mMessageListRv.setAdapter(mMessageAdapter);
     } else {
+      mMessageList = mMessageManager.getMessageList(mId);
       mMessageAdapter.setMessageList(mMessageList);
       mMessageAdapter.notifyDataSetChanged();
     }
+    mMessageListRv.scrollToPosition(mMessageAdapter.getItemCount());
   }
 }

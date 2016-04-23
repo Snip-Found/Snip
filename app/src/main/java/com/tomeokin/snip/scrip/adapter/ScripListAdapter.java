@@ -16,7 +16,6 @@
 package com.tomeokin.snip.scrip.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,9 +81,10 @@ public class ScripListAdapter extends RecyclerView.Adapter<ScripListAdapter.View
   @Override
   public void onClick(View v) {
     final int identity = (int) v.getTag();
-    Intent intent = new Intent(context, ChatActivity.class);
-    intent.putExtra(ChatActivity.EXTRA_MESSAGE_LIST_ID, identity);
-    context.startActivity(intent);
+    ChatActivity.start(context, identity);
+    //Intent intent = new Intent(context, ChatActivity.class);
+    //intent.putExtra(ChatActivity.EXTRA_MESSAGE_LIST_ID, identity);
+    //context.startActivity(intent);
   }
 
   public List<Scrip> getScripList() {

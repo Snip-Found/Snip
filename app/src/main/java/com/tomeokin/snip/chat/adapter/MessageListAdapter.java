@@ -15,14 +15,19 @@
  */
 package com.tomeokin.snip.chat.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tomeokin.snip.R;
 import com.tomeokin.snip.chat.entity.Message;
+import com.tomeokin.snip.utils.uri.UriUtils;
 import de.hdodenhof.circleimageview.CircleImageView;
 import java.util.List;
 
@@ -46,9 +51,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
   }
 
+  private Context context;
   private List<Message> messageList;
 
-  public MessageListAdapter(List<Message> messageList) {
+  public MessageListAdapter(Context context, List<Message> messageList) {
+    this.context = context;
     this.messageList = messageList;
   }
 
@@ -64,11 +71,43 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
   public void onBindViewHolder(ViewHolder holder, int position) {
     final Message message = messageList.get(position);
     holder.itemView.setTag(message.getId());
-    holder.messageImage.setImageDrawable(message.getMessageImg());
-    holder.messageText.setText(message.getMessageText());
-    holder.portraitImg.setImageDrawable(message.getPortraitImg());
-    holder.portraitName.setText(message.getPortraitName());
-    holder.tag.setVisibility(message.isHasTag() ? View.VISIBLE : View.GONE);
+    if (!UriUtils.isEmpty(message.getPortraitImg())) {
+      holder.portraitImg.setVisibility(View.VISIBLE);
+      Glide.with(context)
+          .load(message.getPortraitImg())
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .into(holder.portraitImg);
+    } else {
+      holder.portraitImg.setVisibility(View.GONE);
+    }
+
+    if (!TextUtils.isEmpty(message.getPortraitName())) {
+      holder.portraitName.setVisibility(View.VISIBLE);
+      holder.portraitName.setText(message.getPortraitName());
+    } else {
+      holder.portraitName.setVisibility(View.GONE);
+    }
+
+    if (!TextUtils.isEmpty(message.getMessageText())) {
+      holder.messageText.setVisibility(View.VISIBLE);
+      holder.messageText.setText(message.getMessageText());
+    } else {
+      holder.messageText.setVisibility(View.GONE);
+    }
+
+    if (!UriUtils.isEmpty(message.getMessageImg())) {
+      holder.messageImage.setVisibility(View.VISIBLE);
+      Glide.with(context)
+          .load(message.getMessageImg())
+          .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .fitCenter()
+          .into(holder.messageImage);
+    } else {
+      holder.messageImage.setVisibility(View.GONE);
+    }
+
+    holder.tag.setVisibility(
+        message.getTagList() != null && !message.getTagList().isEmpty() ? View.VISIBLE : View.GONE);
   }
 
   @Override
