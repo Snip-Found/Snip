@@ -89,6 +89,9 @@ public class MessageRemarksFragment extends DialogFragment
       Glide.with(this)
           .load(share.getImgUrl())
           .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .placeholder(R.drawable.loading)
+          .error(R.drawable.load_error)
+          .fitCenter()
           .into(shareImageView);
     }
   }

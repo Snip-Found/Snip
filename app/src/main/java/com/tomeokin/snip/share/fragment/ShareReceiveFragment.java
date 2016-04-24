@@ -25,7 +25,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,11 +148,6 @@ public class ShareReceiveFragment extends Fragment
       message.setPortraitName("收藏"); // TODO
       message.setPortraitImg(UriUtils.resourceIdToUri(getContext(), R.drawable.col_96)); // TODO
       mMessageManager.putMessageInto(mScrip.getIdentity(), message);
-
-      //Intent intent = new Intent(getContext(), ChatActivity.class);
-      //intent.putExtra(ChatActivity.EXTRA_MESSAGE_LIST_ID, mScrip.getIdentity());
-      //getContext().startActivity(intent);
-      Log.i("take", "mId == " + mScrip.getIdentity());
 
       ChatActivity.start(getContext(), mScrip.getIdentity());
       getActivity().finish();

@@ -59,7 +59,6 @@ public class MessageManager {
     }
     messageList.add(message);
     messageCache.put(id, messageList);
-
   }
 
   public static MessageManager getInstance(Context context) {
