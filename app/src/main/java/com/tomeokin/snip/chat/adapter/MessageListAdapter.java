@@ -100,6 +100,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
       Glide.with(context)
           .load(message.getMessageImg())
           .diskCacheStrategy(DiskCacheStrategy.ALL)
+          .placeholder(R.drawable.loading)
+          .error(R.drawable.load_error)
           .fitCenter()
           .into(holder.messageImage);
     } else {

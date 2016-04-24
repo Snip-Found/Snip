@@ -61,7 +61,7 @@
       <ImageView
           android:id="@+id/message_image"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_height="@dimen/message_image_height"
           android:adjustViewBounds="true"
           android:visibility="gone"
           />
@@ -71,6 +71,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@id/message_image"
+          android:autoLink="all"
+          android:textSize="16sp"
           android:visibility="gone"
           tools:text="baidu"
           tools:visibility="visible"

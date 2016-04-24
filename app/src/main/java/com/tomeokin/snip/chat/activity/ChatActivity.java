@@ -25,6 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,9 +42,11 @@ public class ChatActivity extends AppCompatActivity {
   public static final String EXTRA_MESSAGE_LIST_ID =
       "com.tomeokin.snip.chat.activity.message_list_id";
 
+  private RecyclerView messageListRv;
+  private MessageListAdapter messageAdapter;
+  private LinearLayoutManager layoutManager;
+
   TextView mTitle;
-  RecyclerView mMessageListRv;
-  MessageListAdapter mMessageAdapter;
   EditText mEditText;
   Button mSendButton;
 
@@ -62,17 +65,13 @@ public class ChatActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_chat);
 
-    mId = getIntent().getIntExtra(EXTRA_MESSAGE_LIST_ID, -1);
     mMessageManager = MessageManager.getInstance(this);
 
     mTitle = (TextView) findViewById(R.id.title_tv);
-    mMessageListRv = (RecyclerView) findViewById(R.id.messageList_rv);
-    LinearLayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    //mLayoutManager.setReverseLayout(true);
-    //mLayoutManager.setStackFromEnd(true);
-    mMessageListRv.setLayoutManager(mLayoutManager);
-    mMessageListRv.setHasFixedSize(true);
-    updateAdapter();
+    messageListRv = (RecyclerView) findViewById(R.id.messageList_rv);
+    layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+    messageListRv.setLayoutManager(layoutManager);
+    messageListRv.setHasFixedSize(true);
 
     mEditText = (EditText) findViewById(R.id.editText);
     mEditText.addTextChangedListener(new TextWatcher() {
@@ -110,20 +109,31 @@ public class ChatActivity extends AppCompatActivity {
         }
       }
     });
+
+    initIntent(getIntent());
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    initIntent(intent);
+  }
+
+  private void initIntent(Intent intent) {
+    mId = intent.getIntExtra(EXTRA_MESSAGE_LIST_ID, -1);
+    Log.i("take", "mId == " + mId);
+    updateAdapter();
   }
 
   private void updateAdapter() {
-    if (mMessageAdapter == null) {
-      mMessageList = mMessageManager.getMessageList(mId);
-      mMessageAdapter = new MessageListAdapter(this, mMessageList);
-      mMessageListRv.setAdapter(mMessageAdapter);
+    mMessageList = mMessageManager.getMessageList(mId);
+    if (messageAdapter == null) {
+      messageAdapter = new MessageListAdapter(this, mMessageList);
+      messageListRv.setAdapter(messageAdapter);
     } else {
-      mMessageList = mMessageManager.getMessageList(mId);
-      mMessageAdapter.setMessageList(mMessageList);
-      mMessageAdapter.notifyDataSetChanged();
+      messageAdapter.setMessageList(mMessageList);
+      messageAdapter.notifyDataSetChanged();
     }
-    LinearLayoutManager manager = (LinearLayoutManager) mMessageListRv.getLayoutManager();
-    manager.scrollToPositionWithOffset(mMessageAdapter.getItemCount() - 1, 0);
-    //mMessageListRv.scrollToPosition(0);
+    layoutManager.scrollToPositionWithOffset(messageAdapter.getItemCount() - 1, 0);
   }
 }

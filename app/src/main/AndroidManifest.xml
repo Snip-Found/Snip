@@ -31,7 +31,8 @@
         android:name=".chat.activity.ChatActivity"
         android:exported="true"
         android:label="@string/chat"
-        android:theme="@style/ChatTheme"/>
+        android:theme="@style/ChatTheme"
+        android:launchMode="singleTask"/>
     <activity
         android:name=".share.activity.ShareReceiveActivity"
         android:exported="true"

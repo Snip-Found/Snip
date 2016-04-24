@@ -24,6 +24,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,16 +90,14 @@ public class ShareReceiveFragment extends Fragment
   }
 
   @Override
-  public void onResume() {
-    super.onResume();
-  }
-
-  @Override
   public void onItemSelected(View view, Scrip scrip) {
     final String name = getResources().getString(R.string.send_to_arg, scrip.getTitle());
 
     mScrip = scrip;
     Share share = dealIntent();
+    if (share == null) {
+      return;
+    }
 
     FragmentManager fm = getActivity().getSupportFragmentManager();
     MessageRemarksFragment dialog = MessageRemarksFragment.newInstance(name, share);
@@ -110,8 +110,9 @@ public class ShareReceiveFragment extends Fragment
     String action = intent.getAction();
     String type = intent.getType();
 
-    Share share = new Share();
+    Share share = null;
     if (Intent.ACTION_SEND.equals(action) && type != null) {
+      share = new Share();
       if ("text/plain".equals(type)) {
         share.setTitle(intent.getStringExtra(Intent.EXTRA_TITLE));
         share.setWebUrl(intent.getStringExtra(Intent.EXTRA_TEXT));
@@ -138,7 +139,13 @@ public class ShareReceiveFragment extends Fragment
       final Message message = new Message();
       message.setMessageImg(share.getImgUrl());
       message.setTagList(share.getTagList());
-      message.setMessageText(share.getTitle()); // FIXME: 2016/4/23
+
+      String text = !TextUtils.isEmpty(share.getTitle()) ? share.getTitle() : "";
+      if (!TextUtils.isEmpty(share.getWebUrl())) {
+        text += !TextUtils.isEmpty(text) ? " " : "";
+        text += share.getWebUrl();
+      }
+      message.setMessageText(text);
       message.setPortraitName("收藏"); // TODO
       message.setPortraitImg(UriUtils.resourceIdToUri(getContext(), R.drawable.col_96)); // TODO
       mMessageManager.putMessageInto(mScrip.getIdentity(), message);
@@ -146,6 +153,8 @@ public class ShareReceiveFragment extends Fragment
       //Intent intent = new Intent(getContext(), ChatActivity.class);
       //intent.putExtra(ChatActivity.EXTRA_MESSAGE_LIST_ID, mScrip.getIdentity());
       //getContext().startActivity(intent);
+      Log.i("take", "mId == " + mScrip.getIdentity());
+
       ChatActivity.start(getContext(), mScrip.getIdentity());
       getActivity().finish();
     }
